@@ -7,11 +7,17 @@
 
 import SwiftUI
 
+enum Field: Hashable {
+    case vehicleSalesPrice
+    case cashDownPayment
+}
+
+
 struct ContentView: View {
     
     @FocusState private var vehicleSalesPriceIsFocused: Bool
     @FocusState private var cashDownPaymentIsFocused: Bool
-
+    @FocusState private var focusedField: Field?
     
     @State private var vehicleSalesPrice = 15_000.00
     @State private var interestRate = 6
@@ -49,7 +55,7 @@ struct ContentView: View {
                 Section {
                     TextField("Vehicle Sales Price", value: $vehicleSalesPrice, format: currencyFormat)
                         .keyboardType(.decimalPad)
-                        .focused($vehicleSalesPriceIsFocused)
+                        .focused($focusedField, equals: .vehicleSalesPrice)
                         
                     Picker("Interest Rate", selection: $interestRate){
                         ForEach(0..<11){
@@ -72,7 +78,7 @@ struct ContentView: View {
                 Section {
                     TextField("Cash Down Payment", value: $cashDownPayment, format: currencyFormat)
                         .keyboardType(.decimalPad)
-                        .focused($cashDownPaymentIsFocused)
+                        .focused($focusedField, equals: .cashDownPayment)
 
 
                 }header: {
@@ -97,10 +103,7 @@ struct ContentView: View {
                     ToolbarItemGroup(placement: .keyboard){
                         Spacer()
                         Button("Done") {
-                            
-                        
-                            vehicleSalesPriceIsFocused = false
-                            cashDownPaymentIsFocused = false
+                            focusedField = nil
                         }
                     }
                 }
