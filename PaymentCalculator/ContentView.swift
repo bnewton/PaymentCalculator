@@ -23,6 +23,7 @@ struct ContentView: View {
     @State private var cashDownPayment = 0.00
     
     var amountFinanced: Double {
+                
         let total = vehicleSalesPrice - cashDownPayment
         
         return total
@@ -31,11 +32,19 @@ struct ContentView: View {
     var monthlyPayment: Double {
         
         let principal = amountFinanced
-        let rate = (Double(interestRate) / 100) / 12
+        var x: Double = 0.0
         
-        let x = (rate * pow(1.00 + rate, Double(loanTerm))) / (pow(1.00 + rate, Double(loanTerm)) - 1)
+        if Double(interestRate) > 0.0{
+            let rate = (Double(interestRate) / 100) / 12
+            x = (rate * pow(1.00 + rate, Double(loanTerm))) / (pow(1.00 + rate, Double(loanTerm)) - 1)
+            return Double(principal * x)
+        } else {
+            return (principal / Double(loanTerm))
+        }
+        
 
-        return Double(principal * x)
+
+        
     }
     
     let loanTerms = [24, 36, 39, 42, 48, 60, 66, 72, 84]
