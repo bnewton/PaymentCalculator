@@ -15,8 +15,6 @@ enum Field: Hashable {
 
 struct ContentView: View {
     
-    @FocusState private var vehicleSalesPriceIsFocused: Bool
-    @FocusState private var cashDownPaymentIsFocused: Bool
     @FocusState private var focusedField: Field?
     
     @State private var vehicleSalesPrice = 15_000.00
