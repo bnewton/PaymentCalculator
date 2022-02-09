@@ -12,7 +12,6 @@ enum Field: Hashable {
     case cashDownPayment
 }
 
-
 struct ContentView: View {
     
     @FocusState private var focusedField: Field?
@@ -25,7 +24,6 @@ struct ContentView: View {
     var amountFinanced: Double {
                 
         let total = vehicleSalesPrice - cashDownPayment
-        
         return total
     }
     
@@ -37,20 +35,20 @@ struct ContentView: View {
         if Double(interestRate) > 0.0{
             let rate = (Double(interestRate) / 100) / 12
             x = (rate * pow(1.00 + rate, Double(loanTerm))) / (pow(1.00 + rate, Double(loanTerm)) - 1)
+            
             return Double(principal * x)
+            
         } else {
+            
             return (principal / Double(loanTerm))
         }
-        
-
-
-        
     }
     
     let loanTerms = [24, 36, 39, 42, 48, 60, 66, 72, 84]
     
     var currencyFormat: FloatingPointFormatStyle<Double>.Currency{
         let currencyCode = Locale.current.currencyCode ?? "USD"
+        
         return FloatingPointFormatStyle<Double>.Currency(code: currencyCode)
     }
     
@@ -87,8 +85,7 @@ struct ContentView: View {
                         .keyboardType(.decimalPad)
                         .focused($focusedField, equals: .cashDownPayment)
 
-
-                }header: {
+                } header: {
                     Text("Cash Down Payment")
                 }
 
@@ -114,15 +111,14 @@ struct ContentView: View {
                         }
                     }
                 }
+            }
         }
     }
-}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack{
             ContentView()
         }
-        
     }
 }
